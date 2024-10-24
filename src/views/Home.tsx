@@ -5,58 +5,90 @@ import { IResultExplanation, ITestResult } from "../interfaces/ITestResult";
 import { sampleResults } from "../data/sampleResults";
 import CustomerData from "../components/CustomerData";
 import TestExplanation from "../components/TestExplanation";
+import Popover from "../components/Popover";
 
 export default function Home() {
     const [instructionsOpen, setInstructionsOpen] = useState<boolean>(false);
     const [explanationOpen, setExplanationOpen] = useState<boolean>(false);
     const [testResults, setTestResults] = useState<ITestResult[] | null>();
     const [explanation, setExplanation] = useState<IResultExplanation | null>();
-
+    const [row, setRow] = useState<number>(-1);
+    const [column, setColumn] = useState<string>('');
 
     useEffect(() => {
+        // const transformedSampleResults = [];
+        // const names = []
+        // const values = []
+        // names.push(Object.keys(sampleResults[0]));
+        // // values.push(Object.values(sampleResults[0]));
+        // console.log("name", names)
+        // // console.log("value", values)
+        // for (let i: number = 0; i < names[0].length; i++) {
+        //     let values = Object.values(sampleResults)[0];
+        //     console.log('values: ', values[i])
+        //     let item = { name: names[0][i], value: Object.values(sampleResults)[0] }
+        //     console.log("item " + i, item)
+        //     transformedSampleResults.push(item);
+        // }
+        // console.log(transformedSampleResults)
+        sampleResults.prototype.sayHello = function () {
+            // Get the keys of the current object and store them as a string
+            this.objectKeys = Object.keys(this).join(", ");
+
+            return `Hello, my name is ${this.name}`;
+        };
         setTestResults(sampleResults)
     }, [])
 
     function showExplanation(r: ITestResult) {
-        const result: IResultExplanation = {
-            firstGoalScore: r.firstGoalRank,
-            secondGoalScore: r.secondGoalRank,
-            thirdGoalScore: r.thirdGoalRank,
-            fourthGoalScore: r.fourthGoalRank,
-            fifthGoalScore: r.fifthGoalRank,
-            sixthGoalScore: r.sixthGoalRank,
-            seventhGoalScore: r.seventhGoalRank,
-            firstGoalExplan: null,
-            secondGoalExplan: null,
-            thirdGoalExplan: null,
-            fourthGoalExplan: null,
-            fifthGoalExplan: null,
-            sixthGoalExplan: null,
-            seventhGoalExplan: null
-        }
-        setExplanation(result);
+        // const result: IResultExplanation = {
+        //     firstGoalScore: r.firstGoalRank.value,
+        //     secondGoalScore: r.secondGoalRank.name,
+        //     thirdGoalScore: r.thirdGoalRank.name,
+        //     fourthGoalScore: r.fourthGoalRank.name,
+        //     fifthGoalScore: r.fifthGoalRank.name,
+        //     sixthGoalScore: r.sixthGoalRank.name,
+        //     seventhGoalScore: r.seventhGoalRank.name,
+        // }
+        // setExplanation(result);
         setExplanationOpen(true)
+    }
+
+    function nameOf(obj: any): string {
+        return Object.keys(obj)[0];
+    }
+
+    function TableData(props: { property: string | number, thisColumn: string, index: number }) {
+        const { property, thisColumn, index } = props;
+        return (
+            <>
+                <td onClick={() => {
+                    setRow(index); setColumn(thisColumn)
+                }}>
+                    {row == index && column == property && <Popover />}
+                    {property}
+                </td>
+            </>
+        )
     }
 
     const results = testResults && testResults.map((r: ITestResult, i: number) => (
         <tr key={`row${i}`}>
-            <td>{r.testId}</td>
-            <td>{r.subject}</td>
-            <td>{r.testLevel}</td>
-            <td>{r.rawScore}</td>
-            <td>{r.percentCorrect}</td>
-            <td>{r.ritScore}</td>
-            <td>{r.hewittPercentile}</td>
-            <td>{r.natlPercentile}</td>
-            <td>{r.firstGoalRank}</td>
-            <td>{r.secondGoalRank}</td>
-            <td>{r.thirdGoalRank}</td>
-            <td>{r.fourthGoalRank}</td>
-            <td>{r.fifthGoalRank}</td>
-            <td>{r.sixthGoalRank}</td>
-            <td>{r.seventhGoalRank}</td>
-            <td>{r.responses}</td>
-            <td><button className="btn btn-secondary" onClick={() => showExplanation(r)}>Details</button></td>
+            <TableData property={r.testId.value} thisColumn={r.testId.name} index={i} />
+            <TableData property={r.subject.value} thisColumn={r.subject.name} index={i} />
+            <TableData property={r.testLevel.value} thisColumn={r.testLevel.name} index={i} />
+            <TableData property={r.rawScore.value} thisColumn={r.rawScore.name} index={i} />
+            <TableData property={r.percentCorrect.value} thisColumn={r.percentCorrect.name} index={i} />
+            <TableData property={r.ritScore.value} thisColumn={r.ritScore.name} index={i} />
+            <TableData property={r.hewittPercentile.value} thisColumn={r.hewittPercentile.name} index={i} />
+            <TableData property={r.natlPercentile.value} thisColumn={r.natlPercentile.name} index={i} />
+            <TableData property={r.firstGoalRank.value} thisColumn={r.firstGoalRank.name} index={i} />
+            <TableData property={r.secondGoalRank.value} thisColumn={r.secondGoalRank.name} index={i} />
+            <TableData property={r.thirdGoalRank.value} thisColumn={r.thirdGoalRank.name} index={i} />
+            <TableData property={r.fourthGoalRank.value} thisColumn={r.fourthGoalRank.name} index={i} />
+            <TableData property={r.fifthGoalRank.value} thisColumn={r.fifthGoalRank.name} index={i} />
+            <TableData property={r.sixthGoalRank.value} thisColumn={r.sixthGoalRank.name} index={i} />
+            <TableData property={r.seventhGoalRank.value} thisColumn={r.seventhGoalRank.name} index={i} />
         </tr>
     ));
 
@@ -107,8 +139,7 @@ export default function Home() {
                                     <td>Fourth Goal Rank</td>
                                     <td>Fifth Goal Rank</td>
                                     <td>Sixth Goal Rank</td>
-                                    <td>Seventh Goal    Rank</td>
-                                    <td>Responses</td>
+                                    <td>Seventh Goal Rank</td>
                                 </tr>
                             </thead>
                             <tbody>
