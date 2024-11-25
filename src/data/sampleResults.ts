@@ -1,7 +1,7 @@
 import { ScoreEnum, SubjectEnum } from "../enums/Enums";
 import { ITestResult } from "../interfaces/ITestResult";
 
-export const sampleResults: ITestResult[] = [
+export const sampleResults: any[] = [
   {
     customerId: 4,
     studentId: 1,

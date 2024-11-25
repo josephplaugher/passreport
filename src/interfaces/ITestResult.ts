@@ -1,5 +1,10 @@
 import { ScoreEnum, SubjectEnum } from "../enums/Enums";
 
+interface ITestResultProperty {
+    nameof?: string;
+    value: number | SubjectEnum | ScoreEnum;
+}
+
 export interface ITestResult {
     id:string;
     customerId: number;
@@ -32,11 +37,11 @@ export interface IResultExplanation {
     fifthGoalScore: ScoreEnum;
     sixthGoalScore: ScoreEnum;
     seventhGoalScore: ScoreEnum;
-    firstGoalExplan: string | null;
-    secondGoalExplan: string | null;
-    thirdGoalExplan: string | null;
-    fourthGoalExplan: string | null;
-    fifthGoalExplan: string | null;
-    sixthGoalExplan: string | null;
-    seventhGoalExplan: string | null;
+    firstGoalExplan?: string;
+    secondGoalExplan?: string;
+    thirdGoalExplan?: string;
+    fourthGoalExplan?: string;
+    fifthGoalExplan?: string;
+    sixthGoalExplan?: string;
+    seventhGoalExplan?: string;
 }
