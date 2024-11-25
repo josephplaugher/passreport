@@ -127,7 +127,7 @@ export default function Home() {
                                         <td onClick={() => showScoreDetails(rTestResults?.testId, rTestResults?.ritScore, "ritScore")}>{rTestResults?.ritScore}</td>
                                         <td onClick={() => showScoreDetails(rTestResults?.testId, rTestResults?.hewittPercentile, "hewittPercentile")}>{rTestResults?.hewittPercentile}</td>
                                         <td onClick={() => showScoreDetails(rTestResults?.testId, rTestResults?.nationalPercentile, "natlPercentile")}>{rTestResults?.nationalPercentile}</td>
-                                        <td onClick={() => showScoreDetails(mTestResults?.testId, mTestResults?.overallRank, "firstGoalRank")}>{mTestResults?.overallRank}</td>
+                                        <td onClick={() => showScoreDetails(rTestResults?.testId, rTestResults?.overallRank, "firstGoalRank")}>{rTestResults?.overallRank}</td>
                                         <td onClick={() => showScoreDetails(rTestResults?.testId, rTestResults?.firstGoalRank, "firstGoalRank")}>{rTestResults?.firstGoalRank}</td>
                                         <td onClick={() => showScoreDetails(rTestResults?.testId, rTestResults?.secondGoalRank, "secondGoalRank")}>{rTestResults?.secondGoalRank}</td>
                                         <td onClick={() => showScoreDetails(rTestResults?.testId, rTestResults?.thirdGoalRank, "thirdGoalRank")}>{rTestResults?.thirdGoalRank}</td>
@@ -147,7 +147,7 @@ export default function Home() {
                                         <td onClick={() => showScoreDetails(lTestResults?.testId, lTestResults?.ritScore, "ritScore")}>{lTestResults?.ritScore}</td>
                                         <td onClick={() => showScoreDetails(lTestResults?.testId, lTestResults?.hewittPercentile, "hewittPercentile")}>{lTestResults?.hewittPercentile}</td>
                                         <td onClick={() => showScoreDetails(lTestResults?.testId, lTestResults?.nationalPercentile, "natlPercentile")}>{lTestResults?.nationalPercentile}</td>
-                                        <td onClick={() => showScoreDetails(mTestResults?.testId, mTestResults?.overallRank, "firstGoalRank")}>{mTestResults?.overallRank}</td>
+                                        <td onClick={() => showScoreDetails(lTestResults?.testId, lTestResults?.overallRank, "firstGoalRank")}>{lTestResults?.overallRank}</td>
                                         <td onClick={() => showScoreDetails(lTestResults?.testId, lTestResults?.firstGoalRank, "firstGoalRank")}>{lTestResults?.firstGoalRank}</td>
                                         <td onClick={() => showScoreDetails(lTestResults?.testId, lTestResults?.secondGoalRank, "secondGoalRank")}>{lTestResults?.secondGoalRank}</td>
                                         <td onClick={() => showScoreDetails(lTestResults?.testId, lTestResults?.thirdGoalRank, "thirdGoalRank")}>{lTestResults?.thirdGoalRank}</td>
