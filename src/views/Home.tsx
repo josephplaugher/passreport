@@ -4,21 +4,34 @@ import Instructions from "../components/Instructions";
 import { IResultExplanation, ITestResult } from "../interfaces/ITestResult";
 import { sampleResults } from "../data/sampleResults";
 import CustomerData from "../components/CustomerData";
-import TestExplanation from "../components/TestExplanation";
-import Popover from "../components/Popover";
-import React from "react";
-import { ScoreEnum } from "../enums/Enums";
+import Header from "../components/Header";
+import { AxiosClient } from "../data/Ajax";
+import { SubjectEnum } from "../enums/Enums";
 
 export default function Home() {
     const [instructionsOpen, setInstructionsOpen] = useState<boolean>(false);
     const [explanationOpen, setExplanationOpen] = useState<boolean>(false);
-    const [testResults, setTestResults] = useState<ITestResult | null>();
+    const [mTestResults, setMTestResults] = useState<ITestResult | null>();
+    const [lTestResults, setLTestResults] = useState<ITestResult | null>();
+    const [rTestResults, setRTestResults] = useState<ITestResult | null>();
     const [explanation, setExplanation] = useState<IResultExplanation | null>();
     const [explanationText, setExplanationText] = useState<string>("");
     const [focusedCell, setFocusedCell] = useState<string>("");
 
+    function getResultsByTestId() {
+        AxiosClient.get("TestResult/43450")
+            .then((r: any) => {
+                console.log("then...", r)
+                setRTestResults(r.data.find((item: any) => item.subject == "R"));
+                setLTestResults(r.data.find((item: any) => item.subject == "L"));
+                setMTestResults(r.data.find((item: any) => item.subject == "M"));
+            }).catch((error: any) => {
+                console.log("error", error)
+            })
+    }
+
     useEffect(() => {
-        setTestResults(sampleResults)
+        getResultsByTestId();
     }, [])
 
     function showScoreDetails(testId: number | undefined, score: number | string | undefined, scoreType: string | undefined) {
@@ -36,11 +49,11 @@ export default function Home() {
 
     return (
         <>
-            <div className="p-5">
-                <h1 className="my-3">PERSONALIZED ACHIEVEMENT SUMMARY SYSTEM</h1>
-                <h3>REPORT OF TEST RESULTS</h3>
+            <div className="">
+                <Header />
 
-                <div className="container-fluid">
+                <div className="container-fluid p-5">
+                    <h3>REPORT OF TEST RESULTS</h3>
                     <CustomerData setInstructionsOpen={setInstructionsOpen} />
                     <div className="row d-flex justify-content-center">
                         <h3 className="text-center">SUMMARY OF RESULTS</h3>
@@ -54,10 +67,10 @@ export default function Home() {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>51234</td>
-                                    <td>266423-3</td>
-                                    <td>04/31/2022</td>
-                                    <td>83</td>
+                                    <td>{mTestResults?.testId}</td>
+                                    <td>{mTestResults?.studentId}</td>
+                                    <td>[04/31/2022]</td>
+                                    <td>[93]</td>
                                     <td>Eileen Dover</td>
                                 </tr>
                             </tbody>
@@ -68,90 +81,82 @@ export default function Home() {
                         <table className="table w-auto">
                             <thead>
                                 <tr>
-                                    <th scope="col">Test Id<br />Raw Score</th>
-                                    <th scope="col">Subject<br />% Correct</th>
-                                    <th scope="col">Test Level<br />RIT Score</th>
-                                    <th scope="col">Hewitt Percentile</th>
-                                    <th scope="col">Natl Percentile</th>
-                                    <th scope="col">First Goal Rank</th>
-                                    <th scope="col">Second Goal Rank</th>
-                                    <th scope="col">Third Goal Rank</th>
-                                    <th scope="col">Fourth Goal Rank</th>
-                                    <th scope="col">Fifth Goal Rank</th>
-                                    <th scope="col">Sixth Goal Rank</th>
-                                    <th scope="col">Seventh Goal Rank</th>
+                                    <th scope="col" className="m-4">Raw Score</th>
+                                    <th scope="col" className="m-4">Percent Correct</th>
+                                    <th scope="col" className="m-4">Rit Score</th>
+                                    <th scope="col" className="m-4">Hewitt Percentile</th>
+                                    <th scope="col" className="m-4">Natl Percentile</th>
+                                    <th scope="col" className="m-4">Overall Rank</th>
+                                    <th scope="col" className="m-4">First Goal Rank</th>
+                                    <th scope="col" className="m-4">Second Goal Rank</th>
+                                    <th scope="col" className="m-4">Third Goal Rank</th>
+                                    <th scope="col" className="m-4">Fourth Goal Rank</th>
+                                    <th scope="col" className="m-4">Fifth Goal Rank</th>
+                                    <th scope="col" className="m-4">Sixth Goal Rank</th>
+                                    <th scope="col" className="m-4">Seventh Goal Rank</th>
                                 </tr>
                             </thead>
                             <tbody>
+                            <tr className="table-primary">
+                                    <td>Mathematics</td>
+                                </tr>
+                                {mTestResults?.subject == SubjectEnum.M &&
+                                    <tr>
+                                        <td onClick={() => showScoreDetails(mTestResults?.testId, mTestResults?.rawScore, "rawScore")}>{mTestResults?.rawScore}</td>
+                                        <td onClick={() => showScoreDetails(mTestResults?.testId, mTestResults?.percentCorrect, "percentCorrect")}>{mTestResults?.percentCorrect}</td>
+                                        <td onClick={() => showScoreDetails(mTestResults?.testId, mTestResults?.ritScore, "ritScore")}>{mTestResults?.ritScore}</td>
+                                        <td onClick={() => showScoreDetails(mTestResults?.testId, mTestResults?.hewittPercentile, "hewittPercentile")}>{mTestResults?.hewittPercentile}</td>
+                                        <td onClick={() => showScoreDetails(mTestResults?.testId, mTestResults?.nationalPercentile, "nationalPercentile")}>{mTestResults?.nationalPercentile}</td>
+                                        <td onClick={() => showScoreDetails(mTestResults?.testId, mTestResults?.overallRank, "firstGoalRank")}>{mTestResults?.overallRank}</td>
+                                        <td onClick={() => showScoreDetails(mTestResults?.testId, mTestResults?.firstGoalRank, "firstGoalRank")}>{mTestResults?.firstGoalRank}</td>
+                                        <td onClick={() => showScoreDetails(mTestResults?.testId, mTestResults?.secondGoalRank, "secondGoalRank")}>{mTestResults?.secondGoalRank}</td>
+                                        <td onClick={() => showScoreDetails(mTestResults?.testId, mTestResults?.thirdGoalRank, "thirdGoalRank")}>{mTestResults?.thirdGoalRank}</td>
+                                        <td onClick={() => showScoreDetails(mTestResults?.testId, mTestResults?.fourthGoalRank, "fourthGoalRank")}>{mTestResults?.fourthGoalRank}</td>
+                                        <td onClick={() => showScoreDetails(mTestResults?.testId, mTestResults?.fifthGoalRank, "fifthGoalRank")}>{mTestResults?.fifthGoalRank}</td>
+                                        <td onClick={() => showScoreDetails(mTestResults?.testId, mTestResults?.sixthGoalRank, "sixthGoalRank")}>{mTestResults?.sixthGoalRank}</td>
+                                        <td onClick={() => showScoreDetails(mTestResults?.testId, mTestResults?.seventhGoalRank, "seventhGoalRank")}>{mTestResults?.seventhGoalRank}</td>
+                                    </tr>
+                                }
                                 <tr className="table-primary">
-                                    <td>{testResults?.mathTest.testId}</td>
-                                    <td>{testResults?.mathTest.subject}</td>
-                                    <td>{testResults?.mathTest.testLevel}</td>
+                                    <td>Reading</td>
                                 </tr>
-                                <tr>
-                                    <td tabIndex={0}
-                                        onFocus={() => handleFocus("cell-a1")}
-                                        onBlur={handleBlur}
-                                        className={`${focusedCell == "cell-a1" ? "bg-success" : "bg-light"}`} onClick={() => showScoreDetails(testResults?.mathTest.testId, testResults?.mathTest.rawScore, "rawScore")}>{testResults?.mathTest.rawScore}</td>
-                                    <td tabIndex={0}
-                                        onFocus={() => handleFocus("cell-a2")}
-                                        onBlur={handleBlur}
-                                        className={`${focusedCell == "cell-a2" ? "bg-success" : "bg-light"}`} onClick={() => showScoreDetails(testResults?.mathTest.testId, testResults?.mathTest.percentCorrect, "percentCorrect")}>{testResults?.mathTest.percentCorrect}</td>
-                                    <td tabIndex={0}
-                                        onFocus={() => handleFocus("cell-a3")}
-                                        onBlur={handleBlur}
-                                        className={`${focusedCell == "cell-a3" ? "bg-success" : "bg-light"}`} onClick={() => showScoreDetails(testResults?.mathTest.testId, testResults?.mathTest.ritScore, "ritScore")}>{testResults?.mathTest.ritScore}</td>
-                                    <td tabIndex={0}
-                                        onFocus={() => handleFocus("cell-a4")}
-                                        onBlur={handleBlur}
-                                        className={`${focusedCell == "cell-a4" ? "bg-success" : "bg-light"}`} onClick={() => showScoreDetails(testResults?.mathTest.testId, testResults?.mathTest.hewittPercentile, "hewittPercentile")}>{testResults?.mathTest.hewittPercentile}</td>
-                                    <td className={`${focusedCell == testResults?.mathTest.natlPercentile.toString() && "focused"}`} onClick={() => showScoreDetails(testResults?.mathTest.testId, testResults?.mathTest.natlPercentile, "natlPercentile")}>{testResults?.mathTest.natlPercentile}</td>
-                                    <td className={`${focusedCell == testResults?.mathTest.firstGoalRank.toString() && "focused"}`} onClick={() => showScoreDetails(testResults?.mathTest.testId, testResults?.mathTest.firstGoalRank, "firstGoalRank")}>{testResults?.mathTest.firstGoalRank}</td>
-                                    <td className={`${focusedCell == testResults?.mathTest.secondGoalRank.toString() && "focused"}`} onClick={() => showScoreDetails(testResults?.mathTest.testId, testResults?.mathTest.secondGoalRank, "secondGoalRank")}>{testResults?.mathTest.secondGoalRank}</td>
-                                    <td className={`${focusedCell == testResults?.mathTest.thirdGoalRank.toString() && "focused"}`} onClick={() => showScoreDetails(testResults?.mathTest.testId, testResults?.mathTest.thirdGoalRank, "thirdGoalRank")}>{testResults?.mathTest.thirdGoalRank}</td>
-                                    <td className={`${focusedCell == testResults?.mathTest.fourthGoalRank.toString() && "focused"}`} onClick={() => showScoreDetails(testResults?.mathTest.testId, testResults?.mathTest.fourthGoalRank, "fourthGoalRank")}>{testResults?.mathTest.fourthGoalRank}</td>
-                                    <td className={`${focusedCell == testResults?.mathTest.fifthGoalRank.toString() && "focused"}`} onClick={() => showScoreDetails(testResults?.mathTest.testId, testResults?.mathTest.fifthGoalRank, "fifthGoalRank")}>{testResults?.mathTest.fifthGoalRank}</td>
-                                    <td className={`${focusedCell == testResults?.mathTest.sixthGoalRank.toString() && "focused"}`} onClick={() => showScoreDetails(testResults?.mathTest.testId, testResults?.mathTest.sixthGoalRank, "sixthGoalRank")}>{testResults?.mathTest.sixthGoalRank}</td>
-                                    <td className={`${focusedCell == testResults?.mathTest.seventhGoalRank.toString() && "focused"}`} onClick={() => showScoreDetails(testResults?.mathTest.testId, testResults?.mathTest.seventhGoalRank, "seventhGoalRank")}>{testResults?.mathTest.seventhGoalRank}</td>
-                                </tr>
+                                {rTestResults?.subject == SubjectEnum.R &&
+                                    <tr>
+                                        <td onClick={() => showScoreDetails(rTestResults?.testId, rTestResults?.rawScore, "rawScore")}>{rTestResults?.rawScore}</td>
+                                        <td onClick={() => showScoreDetails(rTestResults?.testId, rTestResults?.percentCorrect, "percentCorrect")}>{rTestResults?.percentCorrect}</td>
+                                        <td onClick={() => showScoreDetails(rTestResults?.testId, rTestResults?.ritScore, "ritScore")}>{rTestResults?.ritScore}</td>
+                                        <td onClick={() => showScoreDetails(rTestResults?.testId, rTestResults?.hewittPercentile, "hewittPercentile")}>{rTestResults?.hewittPercentile}</td>
+                                        <td onClick={() => showScoreDetails(rTestResults?.testId, rTestResults?.nationalPercentile, "natlPercentile")}>{rTestResults?.nationalPercentile}</td>
+                                        <td onClick={() => showScoreDetails(mTestResults?.testId, mTestResults?.overallRank, "firstGoalRank")}>{mTestResults?.overallRank}</td>
+                                        <td onClick={() => showScoreDetails(rTestResults?.testId, rTestResults?.firstGoalRank, "firstGoalRank")}>{rTestResults?.firstGoalRank}</td>
+                                        <td onClick={() => showScoreDetails(rTestResults?.testId, rTestResults?.secondGoalRank, "secondGoalRank")}>{rTestResults?.secondGoalRank}</td>
+                                        <td onClick={() => showScoreDetails(rTestResults?.testId, rTestResults?.thirdGoalRank, "thirdGoalRank")}>{rTestResults?.thirdGoalRank}</td>
+                                        <td onClick={() => showScoreDetails(rTestResults?.testId, rTestResults?.fourthGoalRank, "fourthGoalRank")}>{rTestResults?.fourthGoalRank}</td>
+                                        <td onClick={() => showScoreDetails(rTestResults?.testId, rTestResults?.fifthGoalRank, "fifthGoalRank")}>{rTestResults?.fifthGoalRank}</td>
+                                        <td onClick={() => showScoreDetails(rTestResults?.testId, rTestResults?.sixthGoalRank, "sixthGoalRank")}>{rTestResults?.sixthGoalRank}</td>
+                                        <td onClick={() => showScoreDetails(rTestResults?.testId, rTestResults?.seventhGoalRank, "seventhGoalRank")}>{rTestResults?.seventhGoalRank}</td>
+                                    </tr>
+                                }
                                 <tr className="table-primary">
-                                    <td>{testResults?.readingTest.testId}</td>
-                                    <td>{testResults?.readingTest.subject}</td>
-                                    <td>{testResults?.readingTest.testLevel}</td>
+                                    <td>Language</td>
                                 </tr>
-                                <tr>
-                                    <td onClick={() => showScoreDetails(testResults?.readingTest.testId, testResults?.readingTest.rawScore, "rawScore")}>{testResults?.readingTest.rawScore}</td>
-                                    <td onClick={() => showScoreDetails(testResults?.readingTest.testId, testResults?.readingTest.percentCorrect, "percentCorrect")}>{testResults?.readingTest.percentCorrect}</td>
-                                    <td onClick={() => showScoreDetails(testResults?.readingTest.testId, testResults?.readingTest.ritScore, "ritScore")}>{testResults?.readingTest.ritScore}</td>
-                                    <td onClick={() => showScoreDetails(testResults?.readingTest.testId, testResults?.readingTest.hewittPercentile, "hewittPercentile")}>{testResults?.readingTest.hewittPercentile}</td>
-                                    <td onClick={() => showScoreDetails(testResults?.readingTest.testId, testResults?.readingTest.natlPercentile, "natlPercentile")}>{testResults?.readingTest.natlPercentile}</td>
-                                    <td onClick={() => showScoreDetails(testResults?.readingTest.testId, testResults?.readingTest.firstGoalRank, "firstGoalRank")}>{testResults?.readingTest.firstGoalRank}</td>
-                                    <td onClick={() => showScoreDetails(testResults?.readingTest.testId, testResults?.readingTest.secondGoalRank, "secondGoalRank")}>{testResults?.readingTest.secondGoalRank}</td>
-                                    <td onClick={() => showScoreDetails(testResults?.readingTest.testId, testResults?.readingTest.thirdGoalRank, "thirdGoalRank")}>{testResults?.readingTest.thirdGoalRank}</td>
-                                    <td onClick={() => showScoreDetails(testResults?.readingTest.testId, testResults?.readingTest.fourthGoalRank, "fourthGoalRank")}>{testResults?.readingTest.fourthGoalRank}</td>
-                                    <td onClick={() => showScoreDetails(testResults?.readingTest.testId, testResults?.readingTest.fifthGoalRank, "fifthGoalRank")}>{testResults?.readingTest.fifthGoalRank}</td>
-                                    <td onClick={() => showScoreDetails(testResults?.readingTest.testId, testResults?.readingTest.sixthGoalRank, "sixthGoalRank")}>{testResults?.readingTest.sixthGoalRank}</td>
-                                    <td onClick={() => showScoreDetails(testResults?.readingTest.testId, testResults?.readingTest.seventhGoalRank, "seventhGoalRank")}>{testResults?.readingTest.seventhGoalRank}</td>
-                                </tr>
-                                <tr className="table-primary">
-                                    <td>{testResults?.writingTest.testId}</td>
-                                    <td>{testResults?.writingTest.subject} </td>
-                                    <td>{testResults?.writingTest.testLevel}</td>
-                                </tr>
-                                <tr>
-                                    <td onClick={() => showScoreDetails(testResults?.writingTest.testId, testResults?.writingTest.rawScore, "rawScore")}>{testResults?.writingTest.rawScore}</td>
-                                    <td onClick={() => showScoreDetails(testResults?.writingTest.testId, testResults?.writingTest.percentCorrect, "percentCorrect")}>{testResults?.writingTest.percentCorrect}</td>
-                                    <td onClick={() => showScoreDetails(testResults?.writingTest.testId, testResults?.writingTest.ritScore, "ritScore")}>{testResults?.writingTest.ritScore}</td>
-                                    <td onClick={() => showScoreDetails(testResults?.writingTest.testId, testResults?.writingTest.hewittPercentile, "hewittPercentile")}>{testResults?.writingTest.hewittPercentile}</td>
-                                    <td onClick={() => showScoreDetails(testResults?.writingTest.testId, testResults?.writingTest.natlPercentile, "natlPercentile")}>{testResults?.writingTest.natlPercentile}</td>
-                                    <td onClick={() => showScoreDetails(testResults?.writingTest.testId, testResults?.writingTest.firstGoalRank, "firstGoalRank")}>{testResults?.writingTest.firstGoalRank}</td>
-                                    <td onClick={() => showScoreDetails(testResults?.writingTest.testId, testResults?.writingTest.secondGoalRank, "secondGoalRank")}>{testResults?.writingTest.secondGoalRank}</td>
-                                    <td onClick={() => showScoreDetails(testResults?.writingTest.testId, testResults?.writingTest.thirdGoalRank, "thirdGoalRank")}>{testResults?.writingTest.thirdGoalRank}</td>
-                                    <td onClick={() => showScoreDetails(testResults?.writingTest.testId, testResults?.writingTest.fourthGoalRank, "fourthGoalRank")}>{testResults?.writingTest.fourthGoalRank}</td>
-                                    <td onClick={() => showScoreDetails(testResults?.writingTest.testId, testResults?.writingTest.fifthGoalRank, "fifthGoalRank")}>{testResults?.writingTest.fifthGoalRank}</td>
-                                    <td onClick={() => showScoreDetails(testResults?.writingTest.testId, testResults?.writingTest.sixthGoalRank, "sixthGoalRank")}>{testResults?.writingTest.sixthGoalRank}</td>
-                                    <td onClick={() => showScoreDetails(testResults?.writingTest.testId, testResults?.writingTest.seventhGoalRank, "seventhGoalRank")}>{testResults?.writingTest.seventhGoalRank}</td>
-                                </tr>
+                                {lTestResults?.subject == SubjectEnum.L &&
+                                    <tr>
+                                        <td onClick={() => showScoreDetails(lTestResults?.testId, lTestResults?.rawScore, "rawScore")}>{lTestResults?.rawScore}</td>
+                                        <td onClick={() => showScoreDetails(lTestResults?.testId, lTestResults?.percentCorrect, "percentCorrect")}>{lTestResults?.percentCorrect}</td>
+                                        <td onClick={() => showScoreDetails(lTestResults?.testId, lTestResults?.ritScore, "ritScore")}>{lTestResults?.ritScore}</td>
+                                        <td onClick={() => showScoreDetails(lTestResults?.testId, lTestResults?.hewittPercentile, "hewittPercentile")}>{lTestResults?.hewittPercentile}</td>
+                                        <td onClick={() => showScoreDetails(lTestResults?.testId, lTestResults?.nationalPercentile, "natlPercentile")}>{lTestResults?.nationalPercentile}</td>
+                                        <td onClick={() => showScoreDetails(mTestResults?.testId, mTestResults?.overallRank, "firstGoalRank")}>{mTestResults?.overallRank}</td>
+                                        <td onClick={() => showScoreDetails(lTestResults?.testId, lTestResults?.firstGoalRank, "firstGoalRank")}>{lTestResults?.firstGoalRank}</td>
+                                        <td onClick={() => showScoreDetails(lTestResults?.testId, lTestResults?.secondGoalRank, "secondGoalRank")}>{lTestResults?.secondGoalRank}</td>
+                                        <td onClick={() => showScoreDetails(lTestResults?.testId, lTestResults?.thirdGoalRank, "thirdGoalRank")}>{lTestResults?.thirdGoalRank}</td>
+                                        <td onClick={() => showScoreDetails(lTestResults?.testId, lTestResults?.fourthGoalRank, "fourthGoalRank")}>{lTestResults?.fourthGoalRank}</td>
+                                        <td onClick={() => showScoreDetails(lTestResults?.testId, lTestResults?.fifthGoalRank, "fifthGoalRank")}>{lTestResults?.fifthGoalRank}</td>
+                                        <td onClick={() => showScoreDetails(lTestResults?.testId, lTestResults?.sixthGoalRank, "sixthGoalRank")}>{lTestResults?.sixthGoalRank}</td>
+                                        <td onClick={() => showScoreDetails(lTestResults?.testId, lTestResults?.seventhGoalRank, "seventhGoalRank")}>{lTestResults?.seventhGoalRank}</td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>

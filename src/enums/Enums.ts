@@ -1,7 +1,7 @@
 export enum SubjectEnum {
-    L = "Reading",
-    M = "Mathematics",
-    R = "Reading"
+    L = "L",
+    M = "M",
+    R = "R"
 }
 
 export enum ScoreEnum {
