@@ -5,13 +5,17 @@ import { IResultExplanation, ITestResult } from "../interfaces/ITestResult";
 import { sampleResults } from "../data/sampleResults";
 import CustomerData from "../components/CustomerData";
 import TestExplanation from "../components/TestExplanation";
+import CellToolTip from "../components/CellToolTip";
+import { useNavigate } from "react-router";
+import Header from "../components/Header";
 
 export default function Home() {
     const [instructionsOpen, setInstructionsOpen] = useState<boolean>(false);
     const [explanationOpen, setExplanationOpen] = useState<boolean>(false);
     const [testResults, setTestResults] = useState<ITestResult[] | null>();
     const [explanation, setExplanation] = useState<IResultExplanation | null>();
-
+    const [currentCell, setCurrentCell] = useState<ITestResult | null>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         setTestResults(sampleResults)
@@ -46,8 +50,8 @@ export default function Home() {
             <td>{r.rawScore}</td>
             <td>{r.percentCorrect}</td>
             <td>{r.ritScore}</td>
-            <td>{r.hewittPercentile}</td>
-            <td>{r.natlPercentile}</td>
+            <td onClick={() => setCurrentCell(null)}><CellToolTip param={currentCell} index={i} column={typeof (r.hewittPercentile)} />{r.hewittPercentile}</td>
+            <td>{r.nationalPercentile}</td>
             <td>{r.firstGoalRank}</td>
             <td>{r.secondGoalRank}</td>
             <td>{r.thirdGoalRank}</td>
@@ -55,15 +59,15 @@ export default function Home() {
             <td>{r.fifthGoalRank}</td>
             <td>{r.sixthGoalRank}</td>
             <td>{r.seventhGoalRank}</td>
-            <td>{r.responses}</td>
+            <td>{r.response}</td>
             <td><button className="btn btn-secondary" onClick={() => showExplanation(r)}>Details</button></td>
         </tr>
     ));
 
     return (
         <>
+            <Header />
             <div className="p-5">
-                <h1 className="my-3">PERSONALIZED ACHIEVEMENT SUMMARY SYSTEM</h1>
                 <h3>REPORT OF TEST RESULTS</h3>
 
                 <div className="container-fluid">

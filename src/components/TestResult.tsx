@@ -1,6 +1,8 @@
-import { ITestResult } from "../interfaces/ITestResult";
+// import { ITestResult } from "../interfaces/ITestResult";
 
-export default function TestResult(props: ITestResult) {
+export default function TestResult(
+    // props: ITestResult
+) {
 
     return (
         <>
@@ -26,20 +28,20 @@ export default function TestResult(props: ITestResult) {
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{props.testId}</td>
-                        <td>{props.8}</td>
-                        <td>{props.7}</td>
-                        <td>{props.7}</td>
-                        <td>{props.38}</td>
-                        <td>{props.86}</td>
-                        <td>{props.239}</td>
-                        <td>{props.82}</td>
-                        <td>{props.96}</td>
-                        <td>{props.HI}</td>
-                        <td>{props.HI}</td>
-                        <td>{props.HI}</td>
-                        <td>{props.HI}</td>
-                        <td>{props.HI}</td>
+                        <td>testId</td>
+                        <td>8</td>
+                        <td>7</td>
+                        <td>7</td>
+                        <td>38</td>
+                        <td>86</td>
+                        <td>239</td>
+                        <td>82</td>
+                        <td>96</td>
+                        <td>HI</td>
+                        <td>HI</td>
+                        <td>HI</td>
+                        <td>HI</td>
+                        <td>HI</td>
                     </tr>
                 </tbody>
             </table>

@@ -1,6 +1,7 @@
 import { ScoreEnum, SubjectEnum } from "../enums/Enums";
 
 export interface ITestResult {
+    id:string;
     customerId: number;
     studentId: number;
     testId: number;
@@ -10,7 +11,8 @@ export interface ITestResult {
     percentCorrect: number;
     ritScore: number;
     hewittPercentile: number;
-    natlPercentile: number;
+    nationalPercentile: number;
+    overallRank: ScoreEnum;
     firstGoalRank: ScoreEnum;
     secondGoalRank: ScoreEnum;
     thirdGoalRank: ScoreEnum;
@@ -18,7 +20,8 @@ export interface ITestResult {
     fifthGoalRank: ScoreEnum;
     sixthGoalRank: ScoreEnum;
     seventhGoalRank: ScoreEnum;
-    responses: string;
+    response: string;
+    held: undefined | string;
 }
 
 export interface IResultExplanation {
