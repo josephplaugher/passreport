@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
-import { AxiosClient, AxiosClientPostFile } from "../data/Ajax";
+import { useEffect,  useState } from "react";
+import { AxiosClient} from "../data/Ajax";
 import { ITestResult } from "../interfaces/ITestResult";
-import TestResult from "../components/TestResult";
+// import TestResult from "../components/TestResult";
 import Upload from "./Upload";
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router";
 import Header from "../components/Header";
 
 enum CurrentViewEnum {
@@ -58,7 +58,7 @@ export default function Admin() {
             <div className="column column-1 d-flex flex-column bg-secondary pt-5 w-auto">
                 <p className="h2 text-white">MENU</p>
                 <button className="btn btn-primary m-3" onClick={() => setCurrentView(CurrentViewEnum.Upload)}>Upload Test Results</button>
-                <button className="btn btn-primary m-3" onClick={() => setCurrentView(CurrentViewEnum.ViewTest)}>View Test Results</button>
+                <button className="btn btn-primary m-3" onClick={() => { setCurrentView(CurrentViewEnum.ViewTest); getResults(); }}>View Test Results</button>
             </div>
             <div className="column column-2 w-auto">
                 {currerntView == CurrentViewEnum.Upload &&

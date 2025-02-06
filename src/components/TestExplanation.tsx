@@ -1,9 +1,11 @@
-import { IResultExplanation } from "../interfaces/ITestResult";
+// import { IResultExplanation } from "../interfaces/ITestResult";
 
-interface ITestExplanation {
-    explanation: IResultExplanation
-}
-export default function TestExplanation(props: ITestExplanation) {
+// interface ITestExplanation {
+//     explanation: IResultExplanation
+// }
+export default function TestExplanation(
+    // props: ITestExplanation
+) {
     // first score
     // switch(explanation.firstGoalScore) {
     //     case ScoreEnum.HI:
@@ -42,7 +44,7 @@ export default function TestExplanation(props: ITestExplanation) {
                     <p>The student can compute with accuracy</p>
                 </div>
                 <div className="col">
-                    <p className="fw-bold">Performance on This Goal Is {props.explanation.firstGoalScore}</p>
+                    {/* <p className="fw-bold">Performance on This Goal Is {props.explanation.firstGoalScore}</p>
                     <p>Student should use enrichment materials to stimulate
                         additional growth in his or her numeration skills.</p>
                     <p className="fw-bold">Performance on This Goal Is {props.explanation.secondGoalScore}</p>
@@ -65,7 +67,7 @@ export default function TestExplanation(props: ITestExplanation) {
                         feedback.</p>
                     <p className="fw-bold">Performance on This Goal Is {props.explanation.seventhGoalScore}</p>
                     <p>Provide student with review of computation skills. Use
-                        manipulative materials</p>
+                        manipulative materials</p> */}
                 </div>
             </div>
         </div>

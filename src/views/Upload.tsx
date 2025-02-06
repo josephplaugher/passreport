@@ -40,7 +40,7 @@ export default function Upload(props: IProps) {
     return (
         <div className="bg-secondary p-5 rounded">
             <div className="p-5">
-                <h1 className="text-white"><em>Upload PASS file</em></h1>
+                <h1 className="text-white"><em>Upload PASS Scores</em></h1>
             </div>
             <div className="p-5">
                 <form id="form" onSubmit={(e) => submit(e)} ref={formRef}>

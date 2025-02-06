@@ -5,7 +5,7 @@ interface ICustomerDataProps {
 }
 export default function customerData(props: ICustomerDataProps) {
     return (
-        <div className="row d-flex justify-content-start mb-5">
+        <div className="row d-flex justify-content-start mb-4">
             <div className="col">
                 <p className="mb-0">Parent / Guardian</p>
                 <p className="mb-0">Joe Sample</p>

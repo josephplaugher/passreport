@@ -1,5 +1,5 @@
 import { ScoreEnum, SubjectEnum } from "../enums/Enums";
-import { ITestResult } from "../interfaces/ITestResult";
+// import { ITestResult } from "../interfaces/ITestResult";
 
 export const sampleResults: any = {
   customerId: 4,

@@ -1,6 +1,8 @@
-import { ScoreEnum, SubjectEnum } from "../enums/Enums";
+import {  SubjectEnum } from "../enums/Enums";
 
 export interface ITestResult {
+    id: string;
+    customerId: number;
     testId: number;
     studentId: number;
     subject: SubjectEnum;
@@ -18,19 +20,12 @@ export interface ITestResult {
     fifthGoalRank: string;
     sixthGoalRank: string;
     seventhGoalRank: string;
+    response: string;
 }
-
-// export interface ITestResult {
-//     customerId: number;
-//     studentId: number;
-//     mathTest: ITestScore;
-//     readingTest: ITestScore;
-//     writingTest: ITestScore;
-// }
 
 export interface IResultExplanation {
     testId: number;
     subject: SubjectEnum;
     testLevel: number;
-    scores: any
+    scores: any,
 }
